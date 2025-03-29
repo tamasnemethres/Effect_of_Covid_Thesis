@@ -1,6 +1,7 @@
 ###############################################################################
 #Tom
 ###############################################################################
+#Age and first order ToM
 ggplot(tom, aes(x=Age,
                    y=ToM))+
   geom_jitter(height = .05,
@@ -12,10 +13,10 @@ ggplot(tom, aes(x=Age,
   geom_smooth(method = "glm", 
               method.args = list(family = "binomial"), 
               se = FALSE)+
-  labs(x = "Kor", 
-       y= "Elsőfokú ToM képesség")+
+  labs(x = "Kor (év)", 
+       y= "Elsőfokú ToM teszt sikere")+
   scale_y_continuous(breaks = c(0, 0.5,  1))+
-  theme_minimal() +
+  theme_classic() +
   theme(panel.grid.minor = element_blank(),
         panel.grid.major = element_blank(),
         panel.border = element_blank(),
@@ -24,11 +25,11 @@ ggplot(tom, aes(x=Age,
         axis.text.x = element_text(color="black", size = 16),
         axis.text.y = element_text(color="black", size = 14),
         axis.text = element_text(color="black"),
-        axis.title = element_text(color = "black", size = 14))+
+        axis.title = element_text(color = "black", size = 18))+
   xlim(3.80, 7.5)
 
 
-
+#Age and ToM accross groups
 ggplot(tom, aes(x=Age,
                    y= ToM))+
   geom_jitter(height = .05,
@@ -46,13 +47,13 @@ ggplot(tom, aes(x=Age,
               color = "black", 
               linetype = "dashed",
               size=1.5)+
-  labs(x = "Kor", 
-       y= "Elsőfokú ToM képesség",
+  labs(x = "Kor (év)", 
+       y= "Elsőfokú ToM teszt sikere",
        color= "Csoportok")+
   scale_color_discrete(
     labels = c("pre-Covid", "Covid", "poszt-Covid"))+
   scale_y_continuous(breaks = c(0, 0.5,  1))+
-  theme_minimal() +
+  theme_classic() +
   theme(panel.grid.minor = element_blank(),
         panel.grid.major = element_blank(),
         panel.border = element_blank(),
@@ -61,16 +62,16 @@ ggplot(tom, aes(x=Age,
         axis.text.x = element_text(color="black", size = 14),
         axis.text.y = element_text(color="black", size = 16),
         axis.text = element_text(color="black", size= 14),
-        axis.title = element_text(color = "black", size = 16),
+        axis.title = element_text(color = "black", size = 18),
         legend.title = element_blank(),
         legend.text = element_text(color="black", size = 14))+
   xlim(3.80, 7.5)
 
-
+#Age across groups
 ggplot(tom,aes(x=grouping_new,y=Age))+
   geom_violin(fill= "#00A0E3")+
   theme_classic()+
-  labs(x="Csoportok",y="Kor")+
+  labs(x="Csoportok",y="Kor (év)")+
   scale_x_discrete(labels=c("pre-Covid","Covid","poszt-Covid"))+
   theme(axis.text.x=element_text(colour="black",size=14),
         axis.text.y=element_text(colour="black",size=14),
@@ -83,26 +84,19 @@ ggplot(tom,aes(x=grouping_new,y=Age))+
 
 
 
-tom$grouping <-as.factor(tom$grouping)
-#Prepare data for hungarian visualisation
-tom  <- tom  %>%
-  mutate(grouping_new_hun = case_when(
-    grouping_new == "Pre-Covid" ~ "Pre-Covid",
-    grouping_new == "During-Covid" ~ "Covid",
-    grouping_new == "After-Covid" ~ "Poszt-Covid"
-  ))
 
 
 
 
+#Tom and groups, violinplot
 ggplot(tom, aes(x = grouping_new, y = ToM, fill= grouping_new)) +
   geom_violin(show.legend= FALSE)+
   scale_fill_manual(values = c("#E0EAF7", "#E0EAF7", "#156082"))+
   labs(x = "Csoportok", 
-       y= "Elsőfokú tudatelméleti képesség")+
+       y= "Elsőfokú ToM teszt sikere")+
   scale_x_discrete(labels = c("pre-Covid", "Covid", "poszt-Covid")) +
   scale_y_continuous(breaks = c(0,0.5, 1))+
-  theme_minimal() +
+  theme_classic() +
   theme(panel.grid.minor = element_blank(),
         panel.grid.major = element_blank(),
         panel.border = element_blank(),
@@ -119,6 +113,7 @@ rpart.plot(tree)
 ################################################################################
 #ToM2nd
 ################################################################################
+#Age and Tom2nd
 ggplot(tom2nd, aes(x=Age,
                 y=ToM_2nd))+
   geom_jitter(height = .05,
@@ -130,10 +125,10 @@ ggplot(tom2nd, aes(x=Age,
   geom_smooth(method = "glm", 
               method.args = list(family = "binomial"), 
               se = FALSE)+
-  labs(x = "Kor", 
-       y= "Másodfokú ToM képesség")+
+  labs(x = "Kor (év)", 
+       y= "Másodfokú ToM teszt sikere")+
   scale_y_continuous(breaks = c(0, 0.5,  1))+
-  theme_minimal() +
+  theme_classic() +
   theme(panel.grid.minor = element_blank(),
         panel.grid.major = element_blank(),
         panel.border = element_blank(),
@@ -146,7 +141,7 @@ ggplot(tom2nd, aes(x=Age,
   xlim(3.80, 10)
 
 
-
+#Age and ToM2nd accross groups
 ggplot(tom2nd_filtered, aes(x=Age,
                 y= ToM_2nd))+
   geom_jitter(height = .05,
@@ -164,13 +159,13 @@ ggplot(tom2nd_filtered, aes(x=Age,
               color = "black", 
               linetype = "dashed",
               size=1.5)+
-  labs(x = "Kor", 
-       y= "Másodfokú ToM képesség",
+  labs(x = "Kor (év)", 
+       y= "Másodfokú ToM teszt sikere",
        color= "Csoportok")+
   scale_color_discrete(
     labels = c("Covid", "poszt-Covid"))+
   scale_y_continuous(breaks = c(0, 0.5,  1))+
-  theme_minimal() +
+  theme_classic() +
   theme(panel.grid.minor = element_blank(),
         panel.grid.major = element_blank(),
         panel.border = element_blank(),
@@ -184,14 +179,15 @@ ggplot(tom2nd_filtered, aes(x=Age,
         legend.text = element_text(color="black", size = 14))
   xlim(3.80, 10)
 
+#Tom2nd and groups
 ggplot(tom2nd_filtered, aes(x = grouping_new, y = ToM_2nd, fill= grouping_new)) +
   geom_violin(show.legend= FALSE)+
   scale_fill_manual(values = c("#E0EAF7", "#156082"))+
   labs(x = "Csoportok", 
-       y= "Elsőfokú tudatelméleti képesség")+
+       y= "Másodfokú ToM teszt sikere")+
   scale_x_discrete(labels = c("Covid", "poszt-Covid")) +
   scale_y_continuous(breaks = c(0,0.5, 1))+
-  theme_minimal() +
+  theme_classic() +
   theme(panel.grid.minor = element_blank(),
         panel.grid.major = element_blank(),
         panel.border = element_blank(),
@@ -203,11 +199,11 @@ ggplot(tom2nd_filtered, aes(x = grouping_new, y = ToM_2nd, fill= grouping_new)) 
         axis.title = element_text(color = "black", size = 16))
 
 
-
+#Age across groups
 ggplot(tom2nd_filtered,aes(x=grouping_new,y=Age))+
   geom_violin(fill= "#00A0E3")+
   theme_classic()+
-  labs(x="Csoportok",y="Kor")+
+  labs(x="Csoportok",y="Kor (év)")+
   scale_x_discrete(labels=c("Covid","poszt-Covid"))+
   theme(axis.text.x=element_text(colour="black",size=14),
         axis.text.y=element_text(colour="black",size=14),
@@ -223,14 +219,15 @@ rpart.plot(tree_2)
 ################################################################################
 #Real-Apparent Emotion Task
 ###############################################################################
+#Groups and Real Apparent Emotions
 ggplot(appenreal, aes(x = grouping_new, y = Appen_r_a, fill= grouping_new)) +
   geom_violin(show.legend= FALSE)+
   scale_fill_manual(values = c("#E0EAF7", "#156082", "#156082"))+
   scale_x_discrete(labels = c("pre-Covid", "Covid", "poszt-Covid")) +
   labs(x = "Csoportok", 
-       y= "Valós-Látszólagos Megkülönbözetés")+
+       y= "RAE teszt sikere")+
   scale_y_continuous(breaks = c(0,0.5, 1))+
-  theme_minimal() +
+  theme_classic() +
   theme(panel.grid.minor = element_blank(),
         panel.grid.major = element_blank(),
         panel.border = element_blank(),
