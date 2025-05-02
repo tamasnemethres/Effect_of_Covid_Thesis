@@ -14,7 +14,7 @@ ggplot(tom, aes(x=Age,
               method.args = list(family = "binomial"), 
               se = FALSE)+
   labs(x = "Kor (év)", 
-       y= "Elsőfokú ToM teszt sikere")+
+       y= "Elsőfokú hv teszt sikere")+
   scale_y_continuous(breaks = c(0, 0.5,  1))+
   theme_classic() +
   theme(panel.grid.minor = element_blank(),
@@ -48,7 +48,7 @@ ggplot(tom, aes(x=Age,
               linetype = "dashed",
               size=1.5)+
   labs(x = "Kor (év)", 
-       y= "Elsőfokú ToM teszt sikere",
+       y= "Elsőfokú hv teszt sikere",
        color= "Csoportok")+
   scale_color_discrete(
     labels = c("pre-Covid", "Covid", "poszt-Covid"))+
@@ -58,7 +58,9 @@ ggplot(tom, aes(x=Age,
         panel.grid.major = element_blank(),
         panel.border = element_blank(),
         axis.line = element_line(),
-        plot.background = element_rect(fill = "white"),
+        panel.background = element_rect(fill="white"),
+        plot.background = element_rect(fill="white"),
+        legend.background = element_rect(fill="white"),
         axis.text.x = element_text(color="black", size = 14),
         axis.text.y = element_text(color="black", size = 16),
         axis.text = element_text(color="black", size= 14),
@@ -69,7 +71,7 @@ ggplot(tom, aes(x=Age,
 
 #Age across groups
 ggplot(tom,aes(x=grouping_new,y=Age))+
-  geom_violin(fill= "#00A0E3")+
+  geom_violin(fill= "#E1B590")+
   theme_classic()+
   labs(x="Csoportok",y="Kor (év)")+
   scale_x_discrete(labels=c("pre-Covid","Covid","poszt-Covid"))+
@@ -78,11 +80,10 @@ ggplot(tom,aes(x=grouping_new,y=Age))+
         axis.title.x=element_text(size=16),
         axis.title.y=element_text(size=16),
         axis.text = element_text(color="black"),
-        plot.background = element_rect(fill = "white"),
+        panel.background = element_rect(fill="white"),
+        plot.background = element_rect(fill="white"),
         axis.title = element_text(color = "black")
   )
-
-
 
 
 
@@ -93,7 +94,7 @@ ggplot(tom, aes(x = grouping_new, y = ToM, fill= grouping_new)) +
   geom_violin(show.legend= FALSE)+
   scale_fill_manual(values = c("#E0EAF7", "#E0EAF7", "#156082"))+
   labs(x = "Csoportok", 
-       y= "Elsőfokú ToM teszt sikere")+
+       y= "Elsőfokú hv teszt sikere")+
   scale_x_discrete(labels = c("pre-Covid", "Covid", "poszt-Covid")) +
   scale_y_continuous(breaks = c(0,0.5, 1))+
   theme_classic() +
@@ -101,17 +102,18 @@ ggplot(tom, aes(x = grouping_new, y = ToM, fill= grouping_new)) +
         panel.grid.major = element_blank(),
         panel.border = element_blank(),
         axis.line = element_line(),
+        panel.background = element_rect(fill="white"),
         plot.background = element_rect(fill="white"),
-        axis.text.x = element_text(color="black", size = 14),
-        axis.text.y = element_text(color="black", size = 16),
-        axis.text = element_text(color="black", size= 14),
-        axis.title = element_text(color = "black", size = 16))
+        axis.text.x = element_text(color="black", size = 16),
+        axis.text.y = element_text(color="black", size = 18),
+        axis.text = element_text(color="black", size= 16),
+        axis.title = element_text(color = "black", size = 18))
 
 
 tree <- rpart(ToM ~ Age, data=tom, method= "class")
 rpart.plot(tree) 
 ################################################################################
-#ToM2nd
+#Second-order false-belief
 ################################################################################
 #Age and Tom2nd
 ggplot(tom2nd, aes(x=Age,
@@ -126,7 +128,7 @@ ggplot(tom2nd, aes(x=Age,
               method.args = list(family = "binomial"), 
               se = FALSE)+
   labs(x = "Kor (év)", 
-       y= "Másodfokú ToM teszt sikere")+
+       y= "Másodfokú hv teszt sikere")+
   scale_y_continuous(breaks = c(0, 0.5,  1))+
   theme_classic() +
   theme(panel.grid.minor = element_blank(),
@@ -160,7 +162,7 @@ ggplot(tom2nd_filtered, aes(x=Age,
               linetype = "dashed",
               size=1.5)+
   labs(x = "Kor (év)", 
-       y= "Másodfokú ToM teszt sikere",
+       y= "Másodfokú hv teszt sikere",
        color= "Csoportok")+
   scale_color_discrete(
     labels = c("Covid", "poszt-Covid"))+
@@ -170,7 +172,9 @@ ggplot(tom2nd_filtered, aes(x=Age,
         panel.grid.major = element_blank(),
         panel.border = element_blank(),
         axis.line = element_line(),
-        plot.background = element_rect(fill = "white"),
+        panel.background = element_rect(fill="white"),
+        plot.background = element_rect(fill="white"),
+        legend.background = element_rect(fill="white"),
         axis.text.x = element_text(color="black", size = 14),
         axis.text.y = element_text(color="black", size = 16),
         axis.text = element_text(color="black"),
@@ -184,7 +188,7 @@ ggplot(tom2nd_filtered, aes(x = grouping_new, y = ToM_2nd, fill= grouping_new)) 
   geom_violin(show.legend= FALSE)+
   scale_fill_manual(values = c("#E0EAF7", "#156082"))+
   labs(x = "Csoportok", 
-       y= "Másodfokú ToM teszt sikere")+
+       y= "Másodfokú hv teszt sikere")+
   scale_x_discrete(labels = c("Covid", "poszt-Covid")) +
   scale_y_continuous(breaks = c(0,0.5, 1))+
   theme_classic() +
@@ -192,7 +196,8 @@ ggplot(tom2nd_filtered, aes(x = grouping_new, y = ToM_2nd, fill= grouping_new)) 
         panel.grid.major = element_blank(),
         panel.border = element_blank(),
         axis.line = element_line(),
-        plot.background = element_rect(fill="white"),
+        panel.background = element_rect(fill="white"),
+        plot.background = element_rect(fill="white"),,
         axis.text.x = element_text(color="black", size = 14),
         axis.text.y = element_text(color="black", size = 16),
         axis.text = element_text(color="black", size= 14),
@@ -201,7 +206,7 @@ ggplot(tom2nd_filtered, aes(x = grouping_new, y = ToM_2nd, fill= grouping_new)) 
 
 #Age across groups
 ggplot(tom2nd_filtered,aes(x=grouping_new,y=Age))+
-  geom_violin(fill= "#00A0E3")+
+  geom_violin(fill= "#E1B590")+
   theme_classic()+
   labs(x="Csoportok",y="Kor (év)")+
   scale_x_discrete(labels=c("Covid","poszt-Covid"))+
@@ -225,13 +230,14 @@ ggplot(appenreal, aes(x = grouping_new, y = Appen_r_a, fill= grouping_new)) +
   scale_fill_manual(values = c("#E0EAF7", "#156082", "#156082"))+
   scale_x_discrete(labels = c("pre-Covid", "Covid", "poszt-Covid")) +
   labs(x = "Csoportok", 
-       y= "RAE teszt sikere")+
+       y= "Vl érzelmek teszt sikere")+
   scale_y_continuous(breaks = c(0,0.5, 1))+
   theme_classic() +
   theme(panel.grid.minor = element_blank(),
         panel.grid.major = element_blank(),
         panel.border = element_blank(),
         axis.line = element_line(),
+        panel.background = element_rect(fill="white"),
         plot.background = element_rect(fill="white"),
         axis.text.x = element_text(color="black", size = 14),
         axis.text.y = element_text(color="black", size = 16),
@@ -239,5 +245,19 @@ ggplot(appenreal, aes(x = grouping_new, y = Appen_r_a, fill= grouping_new)) +
         axis.title = element_text(color = "black", size = 16))
 
 
+ggplot(appenreal,aes(x=grouping_new,y=Age))+
+  geom_violin(fill= "#E1B590")+
+  theme_classic()+
+  labs(x="Csoportok",y="Kor (év)")+
+  scale_x_discrete(labels=c("pre-Covid", "Covid", "poszt-Covid"))+
+  theme(axis.text.x=element_text(colour="black",size=14),
+        axis.text.y=element_text(colour="black",size=14),
+        axis.title.x=element_text(size=16),
+        axis.title.y=element_text(size=16),
+        axis.text = element_text(color="black"),
+        panel.background = element_rect(fill="#FCEEE5"),
+        plot.background = element_rect(fill="#FCEEE5"),
+        axis.title = element_text(color = "black")
+  )
 
 

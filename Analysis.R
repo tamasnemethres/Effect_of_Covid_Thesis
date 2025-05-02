@@ -1,14 +1,22 @@
+################################################################################
+#1. First order false-belief
+################################################################################
+
+#Descriptive
 describe(tom$Age)
 table(tom$Gender)
+table(tom$grouping_new)
+
 
 
 #Nullmodel
 tom0 <- glm(ToM ~ 1, data= tom, family= "binomial")
-#First modell
+#First model
 tom1 <- glm(ToM ~ Age, data= tom, family = "binomial")
 anova(tom0, tom1, test= "LRT")
 CIbinm2(tom1)
 summary(tom1)
+
 #Adding grouping 
 tom1.1 <- glm(ToM ~ Age+ grouping_new, data= tom, family = "binomial")
 anova(tom1, tom1.1, test= "LRT")
@@ -39,7 +47,7 @@ describe(During_Covid$Age)
 After_Covid <- tom %>%
   filter(grouping_new == "After-Covid")
 
-describe(After_Covid$Age)
+
 
 #Pre-Covid model
 model_0_pc <- glm(ToM ~ 1, data=Pre_Covid, family= "binomial")
@@ -54,10 +62,6 @@ model_dc <- glm(ToM ~ Age, data=During_Covid, family= "binomial")
 anova(model_0_dc, model_dc, test="LRT")
 summary(model_dc)
 
-
-
-
-
 CIbinm2(model_dc)
 
 #post-Covid model
@@ -65,7 +69,7 @@ model_0_ac <-glm(ToM ~ 1 , data= After_Covid, family="binomial")
 model_ac <- glm(ToM ~ Age, data=After_Covid, family= "binomial")
 anova(model_0_ac, model_ac, test="LRT")
 
-#Normalioty test
+#Normality test
 by(tom$Age, tom$grouping_new, function(x){shapiro.test(x)})
 
 
@@ -91,10 +95,12 @@ print(post_hoc_bon)
 tree <- rpart(ToM ~ Age, data=tom, method= "class")
 
 ################################################################################
-#Second-order Theory of Mind task
+#2. Second-order false-belief
 ################################################################################
-describe(tom2nd$Age)
-table(tom2nd$Gender)
+##Descriptive 
+describe(tom2nd_filtered$Age)
+table(tom2nd_filtered$Gender)
+table(tom2nd_filtered$grouping_new)
 
 #Nullmodel
 tom2nd_0 <- glm(ToM_2nd ~ 1, data=tom2nd_filtered, family= "binomial")
@@ -110,6 +116,10 @@ summary(tom2nd_1)
 tom2nd_1.1 <- glm(ToM_2nd ~ Age+ grouping_new, data=tom2nd_filtered, family= "binomial")
 #Comparing the change between the model only with Age, and the model with grouping
 anova(tom2nd_1,tom2nd_1.1, test= "LRT")
+
+
+
+
 
 emmeans(tom2nd_1.1, list(pairwise ~ grouping_new), type= "response")
 summary(tom2nd_1.1)
@@ -139,8 +149,6 @@ model_dc <- glm(ToM_2nd ~ Age, data=During_Covid_2, family= "binomial")
 anova(model_0_dc, model_dc, test="LRT")
 
 
-
-
 #post-Covid model
 model_0_ac <-glm(ToM_2nd ~ 1 , data= After_Covid_2, family="binomial")
 model_ac <- glm(ToM_2nd ~ Age, data=After_Covid_2, family= "binomial")
@@ -162,10 +170,11 @@ summary(age_lm)
 tree_2 <- rpart(ToM_2nd ~ Age, data=tom2nd, method= "class")
 
 ################################################################################
-#Real-Apparet emotions
+#3. Real-Apparet emotion
 ################################################################################
-describe(appenreal$Age)
 
+#Descriptive stats
+describe(appenreal$Age)
 table(appenreal$Gender)
 table(appenreal$grouping_new)
 
@@ -176,7 +185,7 @@ appen_1 <- glm(Appen_r_a ~ Age, data= appenreal, family= "binomial")
 
 anova(appen_0, appen_1, test= "LRT")
 
-#The real apparent emotion ndevelopment was not realted to Age, I removed it from the model
+#The real apparent emotion development was not related to Age, I removed it from the model
 appen_2 <- glm(Appen_r_a ~ grouping_new, data= appenreal, family= "binomial")
 anova(appen_0, appen_2, test= "LRT")
 emmeans(appen_2, list(pairwise ~ grouping_new), type= "response")
@@ -205,16 +214,4 @@ post_hoc_bon <- lincon(Age ~grouping_new, data = appenreal,method = "bonferroni"
 
 print(post_hoc_bon)
 
-
-################################################################################
-#Appenreal-emotions
-################################################################################
-
-#The emotion recognition contained missing data, a cleaned dataset was created to be even the sample sizes across the models 
-appen_emo_c <-  na.omit(appen_emo)
-
-#is emotion recognition development predicting Real-Apparent Emotion recognition development? 
-model_appenemo_0 <- glm(Appen_r_a ~ 1, data= appen_emo_c, family= "binomial")
-model_appenemo_1 <- glm(Appen_r_a ~ Emo_recog_per, data= appen_emo_c, family= "binomial")
-anova(model_appenemo_0, model_appenemo_1, test= "LRT")
 
